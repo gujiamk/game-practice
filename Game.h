@@ -5,6 +5,7 @@
 
 inline constexpr const char* Game_info = "rabish//Game_info.txt";
 
+//test
 class Game
 {
 public:
