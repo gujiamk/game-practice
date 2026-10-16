@@ -1,0 +1,5 @@
+ss = resopic//mans//ss.png
+cityroad = resopic///mans//cityroad.png
+grass = resopic///mans//grass.png
+tree = resopic///mans//tree.png
+house = resopic//mans//house.png
