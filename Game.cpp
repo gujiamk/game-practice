@@ -1,5 +1,5 @@
 ﻿#include "Game.h"
-
+//tst
 Game::Game()
 {
     this->map = std::vector<std::vector<int>>(stepx, std::vector<int>(stepy, 0));
