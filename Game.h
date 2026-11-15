@@ -9,6 +9,7 @@ class Game
 {
 public:
 	friend Game* getGame();
+	~Game();
 
 	//运行游戏
 	void run();
@@ -16,7 +17,6 @@ public:
 private:
 	Game();
 	Game(const Game& Game);
-	~Game();
 
 	Game& operator=(const Game& Game);
 	bool isnewone;

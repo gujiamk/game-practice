@@ -28,13 +28,13 @@ public:
 protected:
 
 	//生命值
-	int* health;
+	std::unique_ptr<int> health;
 
 	//攻击力
-    int* attack;
+	std::unique_ptr<int> attack;
 
     //防御力
-    int* defense;
+    std::unique_ptr<int> defense;
 
 public:
     ~Chara();

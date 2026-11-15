@@ -60,7 +60,7 @@ private:
 };
 
 //一个phtoDV对象的指针
-extern PhotoDV* picdv;
+extern std::unique_ptr<PhotoDV> picdv;
 
 extern PhotoDV* getPhtoDv();
 

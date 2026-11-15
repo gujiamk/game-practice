@@ -2,16 +2,16 @@
 
 Chara::Chara():Object()
 {
-    this->health = new int(100);
-    this->attack = new int(10);
-    this->defense = new int(2);
+    this->health = std::make_unique<int>(100);
+    this->attack = std::make_unique<int>(10);
+    this->defense = std::make_unique<int>(2);
 }
 
 Chara::Chara(std::string name):Object()
 {
-    this->health = new int(100);
-    this->attack = new int(10);
-    this->defense = new int(2);
+    this->health = std::make_unique<int>(100);
+    this->attack = std::make_unique<int>(10);
+    this->defense = std::make_unique<int>(2);
 
     std::ifstream ifs(Chara_info,std::ios::in);
     if (!ifs.is_open())
@@ -38,34 +38,29 @@ Chara::Chara(std::string name):Object()
 
 Chara::Chara(const std::string& name, const Point& point,int health, int attack, int defense):Object(name, point)
 {
-    this->health = new int(health);
-    this->attack = new int(attack);
-    this->defense = new int(defense);
+    this->health = std::make_unique<int>(health);
+    this->attack = std::make_unique<int>(attack);
+    this->defense = std::make_unique<int>(defense);
 }
 
 Chara::Chara(const Chara& player):Object(*player.name, *player.Self_Point)
 {
-    this->health = new int(*player.health);
-    this->attack = new int(*player.attack);
-    this->defense = new int(*player.defense);
+    this->health = std::make_unique<int>(*player.health);
+    this->attack = std::make_unique<int>(*player.attack);
+    this->defense = std::make_unique<int>(*player.defense);
 }
 
 Chara& Chara::operator=(const Chara& player)
 {
-    if(this->name!=nullptr) delete this->name;
-    this->name = new std::string(*player.name);
+    this->name.reset(new std::string(*player.name));
 
-    if (this->Self_Point != nullptr) delete this->Self_Point;
-    this->Self_Point = new Point(*player.Self_Point);
+    this->Self_Point.reset(new Point(*player.Self_Point));
 
-    if (this->health != nullptr) delete this->health;
-    this->health = new int(*player.health);
+    this->health.reset(new int(*player.health));
 
-    if (this->attack != nullptr) delete this->attack;
-    this->attack = new int(*player.attack);
+    this->attack.reset(new int(*player.attack));
 
-    if (this->defense != nullptr) delete this->defense;
-    this->defense = new int(*player.defense);
+    this->defense.reset(new int(*player.defense));
 
     return *this;
 }
@@ -84,7 +79,7 @@ std::ofstream& operator<<(std::ofstream& out, const Chara* const chara)
 void Chara::draw_self(const Point* const camera)
 {
     std::string pic = "ss";
-    picdv->draw_on_map(pic, this->Self_Point, camera);
+    picdv->draw_on_map(pic, this->Self_Point.get(), camera);
 }
 
 void Chara::move(std::vector<std::vector<int>> map,Point* const camera, BYTE vkcode)
@@ -155,21 +150,5 @@ void Chara::func()
 
 Chara::~Chara()
 {
-	if (this->health != nullptr)
-	{
-		delete this->health;
-        this->health = nullptr;
-	}
-
-	if (this->attack != nullptr)
-	{
-        delete this->attack;
-        this->attack = nullptr;
-	}
-
-    if (this->defense != nullptr)
-    {
-        delete this->defense;
-        this->defense = nullptr;
-    }
+	
 }

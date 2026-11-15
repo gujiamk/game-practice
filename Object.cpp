@@ -2,29 +2,27 @@
 
 Object::Object()
 {
-	this->name = new std::string("无名");
-	this->Self_Point = new Point(12,10);
+	this->name = std::make_unique<std::string>("无名");
+	this->Self_Point = std::make_unique<Point>(12, 10);
 }
 
 Object::Object(std::string name,Point point)
 {
-	this->name = new std::string(name);
-	this->Self_Point = new Point(point);
+	this->name = std::make_unique<std::string>(name);
+	this->Self_Point = std::make_unique<Point>(point);
 }
 
 Object::Object(const Object& object)
 {
-	this->name = new std::string(*object.name);
-	this->Self_Point = new Point(*object.Self_Point);
+	this->name = std::make_unique<std::string>(*object.name);
+	this->Self_Point = std::make_unique<Point>(*object.Self_Point);
 }
+
 
 Object& Object::operator=(const Object& obj)
 {
-	if(this->name != nullptr) delete this->name;
-    this->name = new std::string(*obj.name);
-
-    if(this->Self_Point != nullptr) delete this->Self_Point;
-    this->Self_Point = new Point(*obj.Self_Point);
+	this->name.reset(new std::string(*obj.name));
+    this->Self_Point.reset(new Point(*obj.Self_Point));
 
     return *this;
 }
@@ -43,17 +41,5 @@ bool Object::ishere(Point point)
 
 Object::~Object()
 {
-	if (name != nullptr)
-	{
-		delete name;
-		name = nullptr;
-	}
-
-	if (Self_Point != nullptr)
-	{
-		delete Self_Point;
-		Self_Point = nullptr;
-	}
-
-	std::cout<<"Object的析构函数调用"<<std::endl;
+	
 }

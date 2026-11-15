@@ -1,6 +1,6 @@
 ﻿#include "PhotoDV.h"
 
-PhotoDV* picdv = getPhtoDv();
+std::unique_ptr<PhotoDV> picdv(getPhtoDv());
 
 Point camera(0, 0);
 

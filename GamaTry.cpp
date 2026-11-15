@@ -42,9 +42,7 @@ void writer()
 
 int main()
 {
-
-    Game* gametry = getGame();
+    std::unique_ptr<Game> gametry(getGame());
     gametry->run();
-
     return 0;
 }

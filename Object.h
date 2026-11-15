@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Tool.h"
+#include <memory>
 
 class Object
 { 
@@ -12,8 +13,8 @@ public:
 
     Object& operator=(const Object& obj);
 
-    std::string *name;
-    Point* Self_Point;
+    std::unique_ptr<std::string> name;
+    std::unique_ptr<Point> Self_Point;
 
     //自身提供绘制方法
     virtual void draw_self(const Point* const camera) = 0;
