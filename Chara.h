@@ -12,8 +12,8 @@ public:
 	Chara();
 	Chara(std::string name);
     Chara(const std::string& name,const Point& point ,int health, int attack, int defense);
-	Chara(const Chara& player);
-	Chara& operator=(const Chara& player);
+	Chara(const Chara& player)=delete;
+	Chara& operator=(const Chara& player)=delete;
 
 	//自身提供绘制方法
 	void draw_self(const Point* const camera, PhotoDV* picdv);
