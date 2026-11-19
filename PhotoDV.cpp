@@ -1,5 +1,5 @@
 ﻿#include "PhotoDV.h"
-
+//测试注释
 int view(std::string name)
 {
     if (name == "grass")
