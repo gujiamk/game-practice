@@ -11,7 +11,7 @@ public:
 
 	Chara();
     Chara(const std::string& name,const Point& point ,int health, int attack, int defense);
-	Chara(Chara&& player);
+	Chara(Chara&& player) noexcept;
 	Chara(const Chara& player)=delete;
 	Chara& operator=(const Chara& player)=delete;
 

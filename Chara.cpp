@@ -17,7 +17,7 @@ Chara::Chara(const std::string& name, const Point& point,int health, int attack,
     this->defense = std::make_unique<int>(defense);
 }
 
-Chara::Chara(Chara&& player)
+Chara::Chara(Chara&& player) noexcept
 {
 	this->name.reset(player.name.release());
 	this->Self_Point.reset(player.Self_Point.release());
