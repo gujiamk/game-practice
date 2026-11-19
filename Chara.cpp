@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 
+
 Chara::Chara():Object()
 {
     this->health = std::make_unique<int>(100);
