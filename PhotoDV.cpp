@@ -1,5 +1,6 @@
 ﻿#include "PhotoDV.h"
 
+//调试模式使用的相机坐标
 Point camera(0, 0);
 
 int view(std::string name)

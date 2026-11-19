@@ -28,8 +28,6 @@ int view(std::string name);
 void print_word(const std::string& text,Point leftpoint,int size=40,bool isfix=true);
 void print_word(const std::string& text,int x,int y,int size=40,bool isfix=true);
 
-extern Point camera;
-
 //绘图工具
 class PhotoDV
 {
