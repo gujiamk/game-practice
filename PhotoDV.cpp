@@ -1,5 +1,5 @@
 ﻿#include "PhotoDV.h"
-
+//测试注释
 std::unique_ptr<PhotoDV> picdv(getPhtoDv());
 
 Point camera(0, 0);
