@@ -2,6 +2,7 @@
 #include "Object.h"
 #include "PhotoDV.h"
 
+//该注释仅为测试
 //角色档案储存路径
 inline constexpr const char* Chara_info= "rabish//charainfo.txt";
 
