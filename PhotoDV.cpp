@@ -1,8 +1,5 @@
 ﻿#include "PhotoDV.h"
 
-//调试模式使用的相机坐标
-Point camera(0, 0);
-
 int view(std::string name)
 {
     if (name == "grass")
@@ -141,6 +138,7 @@ void PhotoDV::operator()(const std::string& name, const Point* const camera,int 
 void PhotoDV::operator()(const std::string& name, int x, int y)
 {
     auto it = picres.find(name);
+	Point camera(x, y);
 
     if (it != picres.end())
     {
