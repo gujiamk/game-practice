@@ -9,35 +9,6 @@ Chara::Chara():Object()
     this->defense = std::make_unique<int>(2);
 }
 
-Chara::Chara(std::string name):Object()
-{
-    this->health = std::make_unique<int>(100);
-    this->attack = std::make_unique<int>(10);
-    this->defense = std::make_unique<int>(2);
-
-    std::ifstream ifs(Chara_info,std::ios::in);
-    if (!ifs.is_open())
-    {
-        std::cout<<"加载人物档案时未能找到相关文件，你可咨询开发者解决！"<<std::endl;
-        exit(0);
-    }
-
-    while (ifs >> *this->name >> *this->health
-        >> *this->attack >> *this->defense)
-    {
-        if (name == *this->name) break;
-    
-    }
-
-    ifs.close();
-    if (name != *this->name)
-    {
-        std::cout<<"未找到该人物档案！"<<std::endl;
-    }
-    else std::cout<<"加载人物档案成功！"<<std::endl;
-
-}
-
 Chara::Chara(const std::string& name, const Point& point,int health, int attack, int defense):Object(name, point)
 {
     this->health = std::make_unique<int>(health);
@@ -45,26 +16,13 @@ Chara::Chara(const std::string& name, const Point& point,int health, int attack,
     this->defense = std::make_unique<int>(defense);
 }
 
-Chara::Chara(const Chara& player):Object(*player.name, *player.Self_Point)
+Chara::Chara(Chara&& player)
 {
-    this->health = std::make_unique<int>(*player.health);
-    this->attack = std::make_unique<int>(*player.attack);
-    this->defense = std::make_unique<int>(*player.defense);
-}
-
-Chara& Chara::operator=(const Chara& player)
-{
-    this->name.reset(new std::string(*player.name));
-
-    this->Self_Point.reset(new Point(*player.Self_Point));
-
-    this->health.reset(new int(*player.health));
-
-    this->attack.reset(new int(*player.attack));
-
-    this->defense.reset(new int(*player.defense));
-
-    return *this;
+	this->name.reset(player.name.release());
+	this->Self_Point.reset(player.Self_Point.release());
+	this->health.reset(player.health.release());
+	this->attack.reset(player.attack.release());
+	this->defense.reset(player.defense.release());
 }
 
 std::ofstream& operator<<(std::ofstream& out, const Chara* const chara)

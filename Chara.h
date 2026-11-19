@@ -10,8 +10,8 @@ public:
 	friend std::ofstream& operator<<(std::ofstream& out, const Chara* const chara);
 
 	Chara();
-	Chara(std::string name);
     Chara(const std::string& name,const Point& point ,int health, int attack, int defense);
+	Chara(Chara&& player);
 	Chara(const Chara& player)=delete;
 	Chara& operator=(const Chara& player)=delete;
 
