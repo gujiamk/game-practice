@@ -84,7 +84,7 @@ void Chara::draw_self(const Point* const camera, PhotoDV* picdv)
     picdv->draw_on_map(pic, this->Self_Point.get(), camera);
 }
 
-void Chara::move(std::vector<std::vector<int>> map,Point* const camera, BYTE vkcode)
+void Chara::move(const std::vector<std::vector<int>>& map,Point* const camera, BYTE vkcode)
 {
     switch (vkcode)
     {

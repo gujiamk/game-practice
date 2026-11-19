@@ -19,7 +19,7 @@ public:
 	void draw_self(const Point* const camera, PhotoDV* picdv);
 
 	//给入地图和相机坐标指针，在对应相机网格视图上移动角色
-	void move(std::vector<std::vector<int>> map,Point* const camera ,BYTE vkcode);
+	void move(const std::vector<std::vector<int>>& map,Point* const camera ,BYTE vkcode);
 
 
 	void func();
