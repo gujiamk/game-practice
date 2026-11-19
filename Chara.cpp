@@ -9,6 +9,35 @@ Chara::Chara():Object()
     this->defense = std::make_unique<int>(2);
 }
 
+Chara::Chara(std::string name):Object()
+{
+    this->health = std::make_unique<int>(100);
+    this->attack = std::make_unique<int>(10);
+    this->defense = std::make_unique<int>(2);
+
+    std::ifstream ifs(Chara_info,std::ios::in);
+    if (!ifs.is_open())
+    {
+        std::cout<<"加载人物档案时未能找到相关文件，你可咨询开发者解决！"<<std::endl;
+        exit(0);
+    }
+
+    while (ifs >> *this->name >> *this->health
+        >> *this->attack >> *this->defense)
+    {
+        if (name == *this->name) break;
+    
+    }
+
+    ifs.close();
+    if (name != *this->name)
+    {
+        std::cout<<"未找到该人物档案！"<<std::endl;
+    }
+    else std::cout<<"加载人物档案成功！"<<std::endl;
+
+}
+
 Chara::Chara(const std::string& name, const Point& point,int health, int attack, int defense):Object(name, point)
 {
     this->health = std::make_unique<int>(health);
