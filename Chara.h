@@ -28,10 +28,8 @@ protected:
 
 	//生命值
 	std::unique_ptr<int> health;
-
 	//攻击力
 	std::unique_ptr<int> attack;
-
     //防御力
     std::unique_ptr<int> defense;
 
