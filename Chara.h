@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "Object.h"
-#include "PhotoDV.h"
 
 //该注释仅为测试
 //角色档案储存路径
@@ -13,14 +12,15 @@ public:
 
 	Chara();
     Chara(const std::string& name,const Point& point ,int health, int attack, int defense);
-	Chara(const Chara& player);
-	Chara& operator=(const Chara& player);
-	
-	//在对应相机网格视图上绘制角色
-	void draw_self(const Point* const camera);
-	
+	Chara(Chara&& player) noexcept;
+	Chara(const Chara& player)=delete;
+	Chara& operator=(const Chara& player)=delete;
+
+	//自身提供绘制方法
+	void draw_self(const Point* const camera, PhotoDV* picdv);
+
 	//给入地图和相机坐标指针，在对应相机网格视图上移动角色
-	void move(std::vector<std::vector<int>> map,Point* const camera ,BYTE vkcode);
+	void move(const std::vector<std::vector<int>>& map,Point* const camera ,BYTE vkcode);
 
 
 	void func();
@@ -29,10 +29,8 @@ protected:
 
 	//生命值
 	std::unique_ptr<int> health;
-
 	//攻击力
 	std::unique_ptr<int> attack;
-
     //防御力
     std::unique_ptr<int> defense;
 

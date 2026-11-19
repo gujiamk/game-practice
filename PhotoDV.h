@@ -2,8 +2,9 @@
 #include <graphics.h>
 #include <string>
 #include <map>
-#include <fstream>
+#include <vector>
 #include "Tool.h"
+#include <fstream>
 
 #define GRASS 1001
 #define ROAD 1002
@@ -58,9 +59,6 @@ private:
 	void savemap(std::vector<std::vector<int>>& map);
 
 };
-
-//一个phtoDV对象的指针
-extern std::unique_ptr<PhotoDV> picdv;
 
 extern PhotoDV* getPhtoDv();
 

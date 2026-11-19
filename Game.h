@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include <filesystem>
 #include "PhotoDV.h"
 #include "Chara.h"
 
@@ -16,19 +15,22 @@ public:
 
 private:
 	Game();
-	Game(const Game& Game);
+	Game(const Game& Game)=delete;
 
-	Game& operator=(const Game& Game);
+	Game& operator=(const Game& Game)=delete;
 	bool isnewone;
 
 	//玩家
-	Chara* player;
+	std::unique_ptr<Chara> player{ nullptr };
 
 	//地图
 	std::vector<std::vector<int>> map;
 
     //摄像机坐标
-	Point* camera;
+	std::unique_ptr<Point> camera{ nullptr };
+
+	//图像输出对象
+	std::unique_ptr<PhotoDV> picdv{ nullptr };
 
 	//创建角色
     void create_chara();

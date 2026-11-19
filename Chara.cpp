@@ -1,4 +1,7 @@
 ﻿#include "Chara.h"
+#include <vector>
+#include <fstream>
+
 
 Chara::Chara():Object()
 {
@@ -14,26 +17,13 @@ Chara::Chara(const std::string& name, const Point& point,int health, int attack,
     this->defense = std::make_unique<int>(defense);
 }
 
-Chara::Chara(const Chara& player):Object(*player.name, *player.Self_Point)
+Chara::Chara(Chara&& player) noexcept
 {
-    this->health = std::make_unique<int>(*player.health);
-    this->attack = std::make_unique<int>(*player.attack);
-    this->defense = std::make_unique<int>(*player.defense);
-}
-
-Chara& Chara::operator=(const Chara& player)
-{
-    this->name.reset(new std::string(*player.name));
-
-    this->Self_Point.reset(new Point(*player.Self_Point));
-
-    this->health.reset(new int(*player.health));
-
-    this->attack.reset(new int(*player.attack));
-
-    this->defense.reset(new int(*player.defense));
-
-    return *this;
+	this->name.reset(player.name.release());
+	this->Self_Point.reset(player.Self_Point.release());
+	this->health.reset(player.health.release());
+	this->attack.reset(player.attack.release());
+	this->defense.reset(player.defense.release());
 }
 
 std::ofstream& operator<<(std::ofstream& out, const Chara* const chara)
@@ -47,13 +37,13 @@ std::ofstream& operator<<(std::ofstream& out, const Chara* const chara)
     return out;
 }
 
-void Chara::draw_self(const Point* const camera)
+void Chara::draw_self(const Point* const camera, PhotoDV* picdv)
 {
     std::string pic = "ss";
     picdv->draw_on_map(pic, this->Self_Point.get(), camera);
 }
 
-void Chara::move(std::vector<std::vector<int>> map,Point* const camera, BYTE vkcode)
+void Chara::move(const std::vector<std::vector<int>>& map,Point* const camera, BYTE vkcode)
 {
     switch (vkcode)
     {
