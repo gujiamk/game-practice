@@ -46,6 +46,11 @@ void Game::create_chara()
     ofs << name << " " << "12 10 100 10 2\n";
     Point p(12, 10);
     ofs.close();
+
+	ofs.open(Game_info, std::ios::out | std::ios::trunc);
+	ofs << '0' << " " << '0' << std::endl;
+    ofs.close();
+
     std::cout << "角色创建成功！" << std::endl;
     this->player = std::make_unique<Chara>(Chara(name,p,100,10,2));
 
