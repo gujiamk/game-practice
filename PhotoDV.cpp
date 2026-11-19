@@ -1,7 +1,5 @@
 ﻿#include "PhotoDV.h"
 
-std::unique_ptr<PhotoDV> picdv(getPhtoDv());
-
 Point camera(0, 0);
 
 int view(std::string name)

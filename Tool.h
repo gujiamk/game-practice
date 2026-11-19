@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <iostream>
-#include <vector>
 
 constexpr static int WIDTH = 1001;
 constexpr static int HEIGHT = 801;

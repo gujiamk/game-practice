@@ -1,46 +1,20 @@
 ﻿#include "Game.h"
 
+
 Game::Game()
 {
     this->map = std::vector<std::vector<int>>(stepx, std::vector<int>(stepy, 0));
-    this->camera = new Point(0, 0);
+    this->camera = std::make_unique<Point>(Point(0, 0));
+    this->picdv.reset(getPhtoDv());
 
     this->login();
 
     if (!this->loadgame()) exit(0);
 }
 
-Game::Game(const Game& Game)
-{
-    this->player = new Chara(*Game.player);
-    this->camera = new Point(*Game.camera);
-    this->isnewone = Game.isnewone;
-}
-
 Game::~Game()
 {
-    if (this->player != nullptr)
-    {
-        delete this->player;
-        this->player = nullptr;
-    }
-
-    if (this->camera != nullptr)
-    {
-        delete this->camera;
-        this->camera = nullptr;
-    }
-}
-
-Game& Game::operator=(const Game& game)
-{
-    if(this->player != nullptr) delete this->player;
-    this->player = new Chara(*game.player);
-
-    this->camera = new Point(game.camera->first, game.camera->second);
-    this->isnewone = game.isnewone;
-
-    return *this;
+    
 }
 
 Game* getGame()
@@ -70,16 +44,17 @@ void Game::create_chara()
     }
 
     ofs << name << " " << "12 10 100 10 2\n";
+    Point p(12, 10);
     ofs.close();
     std::cout << "角色创建成功！" << std::endl;
-    this->player = new Chara();
+    this->player = std::make_unique<Chara>(Chara(name,p,100,10,2));
 
     return;
 }
 
 void Game::login()
 {
-    std::ifstream ifs(Chara_info, std::ios::in);
+    std::ifstream ifs(Chara_info, std::ios::in|std::ios::binary);
     if (!ifs.is_open())
     {
         std::cout << "未找到角色档案文件，正在创建角色档案文件！" << std::endl;
@@ -97,7 +72,7 @@ void Game::login()
 
         ifs >> name >> point.first >> point.second >> health >> attack >> defense;
 
-        this->player = new Chara(name, point, health, attack, defense);
+        this->player = std::make_unique<Chara>(Chara(name, point, health, attack, defense));
         ifs.close();
         this->isnewone = false;
 
@@ -171,13 +146,13 @@ void Game::savegame()
     ofs << this->camera->first << " " << this->camera->second << std::endl;
     ofs.close();
 
-    ofs.open(Chara_info, std::ios::out|std::ios::trunc);
+    ofs.open(Chara_info, std::ios::out|std::ios::trunc|std::ios::binary);
     if (!ofs.is_open())
     {
         std::cout << "保存角色信息失败" << std::endl;
         return;
     }
-    ofs << this->player;
+    ofs << this->player.get();
     ofs.close();
     std::cout << "保存游戏信息成功" << std::endl;
 }
@@ -212,27 +187,27 @@ void Game::run()
             {
                 if (this->map[i][j] == GRASS)
                 {
-                    (*picdv)("grass", this->camera, i, j);
+                    (*picdv)("grass", this->camera.get(), i, j);
                 }
                 else if (this->map[i][j] == TREE)
                 {
-                    (*picdv)("tree", this->camera, i, j);
+                    (*picdv)("tree", this->camera.get(), i, j);
                 }
                 else if (this->map[i][j] == HUOSE)
                 {
-                    (*picdv)("house", this->camera, i, j);
+                    (*picdv)("house", this->camera.get(), i, j);
                 }
                 else if (this->map[i][j] == ROAD)
                 {
-                    (*picdv)("cityroad", this->camera, i, j);
+                    (*picdv)("cityroad", this->camera.get(), i, j);
                 }
                 else if (this->map[i][j] == SS)
                 {
-                    (*picdv)("ss", this->camera, i, j);
+                    (*picdv)("ss", this->camera.get(), i, j);
                 }
             }
         }
-        this->player->draw_self(this->camera);
+        this->player->draw_self(this->camera.get(),picdv.get());
         FlushBatchDraw();
 
         getmessage(&msg, EX_KEY | EX_MOUSE);
@@ -241,16 +216,16 @@ void Game::run()
             switch (msg.vkcode)
             {
             case VK_LEFT:
-                this->player->move(map, this->camera, VK_LEFT);
+                this->player->move(map, this->camera.get(), VK_LEFT);
                 break;
             case VK_RIGHT:
-                this->player->move(map, this->camera, VK_RIGHT);
+                this->player->move(map, this->camera.get(), VK_RIGHT);
                 break;
             case VK_UP:
-                this->player->move(map, this->camera, VK_UP);
+                this->player->move(map, this->camera.get(), VK_UP);
                 break;
             case VK_DOWN:
-                this->player->move(map,this->camera,VK_DOWN);
+                this->player->move(map,this->camera.get(),VK_DOWN);
                 break;
             case VK_TAB:
                 

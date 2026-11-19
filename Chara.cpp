@@ -1,4 +1,6 @@
 ﻿#include "Chara.h"
+#include <vector>
+#include <fstream>
 
 Chara::Chara():Object()
 {
@@ -47,7 +49,7 @@ std::ofstream& operator<<(std::ofstream& out, const Chara* const chara)
     return out;
 }
 
-void Chara::draw_self(const Point* const camera)
+void Chara::draw_self(const Point* const camera, PhotoDV* picdv)
 {
     std::string pic = "ss";
     picdv->draw_on_map(pic, this->Self_Point.get(), camera);
